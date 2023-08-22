@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">homework1</string>
+    <string name="signin_name">아이디를 입력하세요.</string>
+    <string name="signin_pw">비밀번호를 입력하세요.</string>
+    <string name="toast_msg_idpgErr">아이디/비밀번호를 입력해주세요..</string>
+    <string name="toast_msg_idErr">아이디를 입력해주세요..</string>
+    <string name="toast_msg_pwErr">비밀번호를 입력해주세요..</string>
+    <string name="toast_msg_nameErr">이름을 입력해주세요..</string>
+    <string name="toast_msg_mbtiErr">mbti를 입력해주세요..</string>
+    <string name="toast_msg_ageErr">나이를 입력해주세요..</string>
+    <string name="toast_msg_Err">정보를 입력해주세요..</string>
+    <string name="signup_id">아이디를 입력하세요.</string>
+    <string name="signup_pw">비밀번호를 입력하세요.</string>
+    <string name="signup_name">이름을 입력하세요.</string>
+    <string name="signup_mbti">MBTI를 입력하세요.</string>
+</resources>

@@ -1,3 +1,4 @@
 # homework12
 
-homework12 = 자기소개 개인 과제
+appleMarket = 사과 마켓 과제
+homework1 = 자기소개 개인 과제

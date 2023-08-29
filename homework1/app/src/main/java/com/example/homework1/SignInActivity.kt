@@ -28,7 +28,7 @@ class SignInActivity : AppCompatActivity() {
                 val user_pw = it.data?.getStringExtra("pw") ?: ""
                 et_id.setText(user_id)
                 et_pw.setText(user_pw)
-            }
+            } // 수정해야 할거
         }
 
         btn_log.setOnClickListener {

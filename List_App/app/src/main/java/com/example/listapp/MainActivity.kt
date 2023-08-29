@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int) {
                 val name: String = dataList[position].aName
                 val phone: String = dataList[position].aPhoneNumber
+                // Intent를 이용해서 다이얼에 전화번호정보를 출력시킴
                 val intnet = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
                 startActivity(intnet)
             }

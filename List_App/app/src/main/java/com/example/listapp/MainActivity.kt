@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int) {
                 val name: String = dataList[position].aName
                 val phone: String = dataList[position].aPhoneNumber
-
+                val intnet = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+                startActivity(intnet)
             }
         }
     }

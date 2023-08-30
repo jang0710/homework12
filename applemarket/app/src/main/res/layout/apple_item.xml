@@ -11,8 +11,8 @@
         android:id="@+id/CardView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:cardCornerRadius="10dp"
         android:layout_margin="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,6 +21,8 @@
             android:id="@+id/iv_sample"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="@drawable/shape_image"
+            android:clipToOutline="true"
             android:scaleType="centerCrop"
             android:src="@drawable/sample6"/>
 
@@ -102,6 +104,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

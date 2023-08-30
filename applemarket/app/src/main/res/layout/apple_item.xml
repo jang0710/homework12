@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_sample"
+            android:id="@+id/iv_sampleimage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/shape_image"
@@ -39,7 +39,7 @@
         android:maxLines="2"
         android:text="@string/TV_NAME"
         android:textColor="#424242"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CardView"
@@ -55,7 +55,7 @@
         android:ellipsize="end"
         android:text="@string/TV_ADDRESS"
         android:textColor="#848484"
-        android:textSize="13sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CardView"
@@ -71,7 +71,7 @@
         android:ellipsize="end"
         android:text="@string/TV_PRICE"
         android:textColor="@color/black"
-        android:textSize="17sp"
+        android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/CardView"

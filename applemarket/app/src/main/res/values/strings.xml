@@ -3,4 +3,5 @@
     <string name="TV_ADDRESS">수원시 영통구 원천동</string>
     <string name="TV_PRICE">50,000원</string>
     <string name="TV_NAME">프라다 복조리백</string>
+    <string name="tv_manner"><u>매너온도</u></string>
 </resources>

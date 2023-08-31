@@ -1,8 +1,10 @@
 package com.example.applemarket
 
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.ActivityDetailBinding
 import com.example.applemarket.databinding.AppleItemBinding
@@ -47,6 +49,7 @@ class AppleAdapter(val appleItems: MutableList<MyItem>) :
         val bubble = binding.tvSpbubble
         val heart = binding.tvHeart
     }
+
 }
 
 

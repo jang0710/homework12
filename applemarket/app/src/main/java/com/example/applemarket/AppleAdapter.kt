@@ -13,7 +13,7 @@ import java.lang.RuntimeException
 class AppleAdapter(val appleItems: MutableList<MyItem>) :
     RecyclerView.Adapter<AppleAdapter.AppleItems>() {
     interface ItemClick {
-        fun onClick(view: View, position: Int)
+        fun onClick(view: View, position: Int, item: MyItem)
     }
 
     var itemClick: ItemClick? = null
@@ -25,7 +25,7 @@ class AppleAdapter(val appleItems: MutableList<MyItem>) :
 
     override fun onBindViewHolder(holder: AppleItems, position: Int) {
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position)
+            itemClick?.onClick(it, position, appleItems[position])
         }
         holder.image.setImageResource(appleItems[position].aImage)
         holder.name.text = appleItems[position].aName
@@ -48,8 +48,16 @@ class AppleAdapter(val appleItems: MutableList<MyItem>) :
         val price = binding.tvPrice
         val bubble = binding.tvSpbubble
         val heart = binding.tvHeart
-    }
 
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    itemClick?.onClick(it, position, appleItems[position])
+                }
+            }
+        }
+    }
 }
 
 

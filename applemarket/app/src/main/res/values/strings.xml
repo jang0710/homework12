@@ -12,4 +12,5 @@
     <string name="tv_heartnumber">25</string>
     <string name="tv_spbubble">14</string>
     <string name="tv_title">내배캠동</string>
+    <string name="back_button_event">메인으로 돌아옴.</string>
 </resources>

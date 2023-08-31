@@ -1,5 +1,4 @@
 package com.example.applemarket
-
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,11 +14,13 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var isFloatingButtonVisible = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -45,12 +46,12 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
+
         adapter.itemClick = object : AppleAdapter.ItemClick {
             override fun onClick(view: View, position: Int, item: MyItem) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra("selected_item", item)
                 startActivity(intent)
-
             }
         }
     }

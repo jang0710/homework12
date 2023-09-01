@@ -91,19 +91,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_heart" />
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="17dp"
+        android:src="@drawable/heart_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_hearttext" />
+
+    <TextView
+        android:id="@+id/tv_hearttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
-        android:drawableStart="@drawable/heart_image"
-        android:drawablePadding="2dp"
         android:text="@string/tv_heartnumber"
         android:textColor="#848484"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_price" />
 
     <View
         android:id="@+id/grayline"

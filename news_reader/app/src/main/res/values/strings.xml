@@ -2,4 +2,6 @@
     <string name="app_name">newsReader</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_TTLCTT"><u>초동 진화 잔불 정리 과정 2차 폭발…시민 포함 다수 폭발 잔해에 다쳐</u></string>
+    <string name="tv_TTL">부산 목욕탕 화재 진압 중 폭발…구청장·소방관 등 17명 중경상</string>
 </resources>

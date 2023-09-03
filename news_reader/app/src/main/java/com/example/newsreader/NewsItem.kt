@@ -1,9 +1,24 @@
 package com.example.newsreader
 
+import android.os.Bundle
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class NewsItem (
-    val title:String, val article : String
-) : Parcelable
+data class NewsItem(
+    val nImage: Int,
+    val nTitle: String,
+    val nTitleContent: String,
+    val nContent: String,
+    val nTime: String
+) : Parcelable {
+    companion object {
+        fun newInstnance(newsItem: NewsItem): DetailFragment {
+            val fragment = DetailFragment()
+            val bundle = Bundle()
+            bundle.putParcelable("newsItem", newsItem)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+}

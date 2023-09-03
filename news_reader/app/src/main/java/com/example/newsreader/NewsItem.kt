@@ -11,14 +11,4 @@ data class NewsItem(
     val nTitleContent: String,
     val nContent: String,
     val nTime: String
-) : Parcelable {
-    companion object {
-        fun newInstnance(newsItem: NewsItem): DetailFragment {
-            val fragment = DetailFragment()
-            val bundle = Bundle()
-            bundle.putParcelable("newsItem", newsItem)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-}
+) : Parcelable

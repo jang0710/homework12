@@ -8,17 +8,20 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.newsreader.databinding.ActivityMainBinding
 import com.example.newsreader.databinding.FragmentDetailBinding
 import com.example.newsreader.databinding.FragmentTitleBinding
+import com.google.android.material.tabs.TabLayout
 
 
 class MainActivity : AppCompatActivity() {
 
+
     private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+        ActivityMainBinding.inflate(layoutInflater) }
+    lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        tabLayout = binding.newsTabLayout
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             supportFragmentManager.beginTransaction()

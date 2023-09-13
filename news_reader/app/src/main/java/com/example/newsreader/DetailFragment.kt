@@ -1,6 +1,7 @@
 package com.example.newsreader
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,48 +14,34 @@ import com.example.newsreader.databinding.FragmentDetailBinding
 import org.w3c.dom.Text
 
 class DetailFragment : Fragment() {
-    private lateinit var tv_mainContents: TextView
-    private lateinit var newsItem: NewsItem
-    private lateinit var tv_titleContents: TextView
-    private lateinit var news_mainimage: ImageView
-    private lateinit var news_mainTime: TextView
-    private lateinit var mainTitle: TextView
 
-    companion object {
-        fun newInstnance(newsItem: NewsItem): DetailFragment {
-            val fragment = DetailFragment()
-            val args = Bundle()
-            args.putParcelable("newsItem", newsItem)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        tv_mainContents = view.findViewById(R.id.tv_mainContents)
-        tv_titleContents = view.findViewById(R.id.tv_titleContents)
-        news_mainimage = view.findViewById(R.id.news_mainimage)
-        news_mainTime = view.findViewById(R.id.news_mainTime)
-        mainTitle = view.findViewById(R.id.mainTitle)
+        val binding = FragmentDetailBinding.inflate(inflater,container,false)
+        val view = binding.root
 
+        parentFragmentManager.setFragmentResultListener("titlekey",this){key, result ->
+            val getItem = result.getParcelableArrayList<NewsItem>("titleitem")
+            Log.d("TitleFragment", "detail에서 받는 데이터 ${getItem.toString()}")
+            binding.apply {
+                if(!getItem.isNullOrEmpty()){
 
-        newsItem = arguments?.getParcelable("newsItem") ?: NewsItem(0, "","", "", "")
+                    mainTitle.text = getItem[0].nTitle
+                    newsMainimage.setImageResource(getItem[0].nImage)
+                    newsMainTime.text = getItem[0].nTime
+                    tvTitleContents.text = getItem[0].nTitleContent
+                    tvMainContents.text = getItem[0].nContent
+                    getItem.clear()
+                }
 
-        updateContent(newsItem)
+            }
 
+        }
         return view
     }
-    fun updateContent(newsItem: NewsItem) {
-        tv_mainContents.text = newsItem.nContent
-        tv_titleContents.text = newsItem.nTitleContent
-        val drawable = ContextCompat.getDrawable(requireContext(), newsItem.nImage)
-        news_mainimage.setImageDrawable(drawable)
-        news_mainTime.text = newsItem.nTime
-        mainTitle.text = newsItem.nTitle
 
-    }
 }

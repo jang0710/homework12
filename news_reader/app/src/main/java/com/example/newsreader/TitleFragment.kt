@@ -5,26 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.newsreader.databinding.FragmentTitleBinding
 
 
 class TitleFragment : Fragment() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: NewsAdapter
-    private val newsList = mutableListOf<NewsItem>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_title, container, false)
+        val binding =FragmentTitleBinding.inflate(inflater,container,false)
+        val view = binding.root
 
-        recyclerView = view.findViewById(R.id.titleRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-
-        // RecyclerView 설정 및 어댑터 연결
+        val newsList = mutableListOf<NewsItem>()
         newsList.add(
             NewsItem(
                 R.drawable.fire_accident,
@@ -283,14 +278,22 @@ class TitleFragment : Fragment() {
                 "2023-09-03 10:53"
             )
         )
-        adapter = NewsAdapter(newsList)
-        recyclerView.adapter = adapter
+        val adapter = NewsAdapter(newsList)
+        binding.titleRecyclerView.adapter = adapter
+        binding.titleRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val divider = DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL)
+        binding.titleRecyclerView.addItemDecoration(divider)
 
 
-        // RecyclerView 아이템 클릭 처리
+        val newsItemList = arrayListOf<NewsItem>()
         adapter.itemClick = object : NewsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val newsItem = newsList[position]
+                newsItemList.add(newsItem)
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("titleitem", newsItemList)
+                setFragmentResult("titlekey", bundle)
                 (activity as MainActivity).showDetailFragment(newsItem)
             }
         }

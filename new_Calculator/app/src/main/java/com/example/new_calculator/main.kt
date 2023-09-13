@@ -10,7 +10,7 @@ fun main() {
 
 //    val calc = Calculator()
     if (op == "+") {
-        val addCalc = Calculator(AddOperation())
+        val addCalc = Calculator(AddOperation()) // 덧셈연산을 수행할때 AddOperation을 사용한다.
         println("계산 결과는 :${addCalc.operate(a,b)}입니다.")
     } else if (op == "-") {
         val subCalc = Calculator(SubtractOperation())

@@ -1,6 +1,6 @@
 # homework12
 
-new_Calculator = 계산기 과제 다시 한 것
+new_Calculator = 계산기 과제2023/09/13
 
 List_App = 후발대 과제(전화번호부)
 

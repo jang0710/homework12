@@ -1,6 +1,7 @@
 package com.example.new_calculator
 
 class Calculator (private val operation: AbstractOperation) {
+    // opeeration 추상 연산: AbstractOperation 추상 클래스
     fun operate (a:Int, b:Int): Double {
         return operation.operate(a,b)
     }

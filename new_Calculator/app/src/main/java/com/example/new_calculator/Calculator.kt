@@ -1,9 +1,9 @@
 package com.example.new_calculator
 
-class Calculator (private val operation: AbstractOperation) {
-    // opeeration 추상 연산: AbstractOperation 추상 클래스
-    fun operate (a:Int, b:Int): Double {
-        return operation.operate(a,b)
+class Calculator (private val operation: AbstractOperation) { //
+    // operation : AbstractOperation 타입의 매개변수
+    fun operate (a:Int, b:Int): Double { // a,b의 값을 입력받고
+        return operation.operate(a,b) // operation에 저장된 객체의 operate 메서드를 호출한다.
     }
 //    fun addOperation(a:Int, b:Int) : Double {
 //        val add = AddOperation()

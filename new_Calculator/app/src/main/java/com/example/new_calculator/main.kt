@@ -8,21 +8,25 @@ fun main() {
 
     var b = inputMyInfo("b").toString().toInt()
 
-    val calc = Calculator()
+//    val calc = Calculator()
     if (op == "+") {
-        println("계산 결과는 :${calc.addOperation(a, b)}입니다.")
+        val addCalc = Calculator(AddOperation())
+        println("계산 결과는 :${addCalc.operate(a,b)}입니다.")
     } else if (op == "-") {
-        println("계산 결과는${calc.subStractOperation(a,b)}입니다.")
+        val subCalc = Calculator(SubtractOperation())
+        println("계산 결과는${subCalc.operate(a,b)}입니다.")
     } else if (op == "*") {
-        println("계산 결과는 ${calc.MultipleOperation(a,b)}입니다.")
+        val mulCalc = Calculator(MultipleOperation())
+        println("계산 결과는 ${mulCalc.operate(a,b)}입니다.")
     } else if (op == "/") {
-        println("계산 결과는 ${calc.DivideOperation(a,b)}입니다.")
+        val divCalc = Calculator(DivideOperation())
+        println("계산 결과는 ${divCalc.operate(a,b)}입니다.")
     } else {
         println("잘못된 계산입니다.")
     }
 }
 fun inputMyInfo(type: String): Any? {
-    return when (type) {
+     when (type) {
         "a" -> {
             println("숫자를 입력해 주세요.")
             while (true) {

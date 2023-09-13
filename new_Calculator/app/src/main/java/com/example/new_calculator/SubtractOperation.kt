@@ -1,5 +1,8 @@
 package com.example.new_calculator
 
-class SubtractOperation {
-    fun operate(a:Int, b:Int): Double = (a - b).toDouble()
+class SubtractOperation :AbstractOperation() {
+   override fun operate(a: Int, b: Int): Double {
+      return (a - b).toDouble()
+   }
+
 }

@@ -1,17 +1,20 @@
 package com.example.new_kiosk
 
 import android.annotation.SuppressLint
+import android.os.Build
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.util.Timer
 import java.util.TimerTask
-
 val menus: MutableList<Menu> = ArrayList()
 var money: Double = 0.0
 val foods: MutableList<Food> = ArrayList()
 val orders: MutableList<Order> = ArrayList()
+@SuppressLint("NewApi")
 var now = LocalDateTime.now()
+@SuppressLint("NewApi")
 var start = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 10, 0)
+@SuppressLint("NewApi")
 var end = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 45, 0)
 
 @SuppressLint("NewApi")
@@ -127,8 +130,12 @@ fun selectMenu(cateNumber: Int): Food? {
                             var isMainatainance = isMainatainance()
 
                             if (isMainatainance.first) {
-                                println("현재 시각은 ${isMainatainance.second.hour}시 ${isMainatainance.second.minute}분입니다.")
-                                println("은행 점검 시간은 ${start.hour}시 ${start.minute}분 ~ ${end.hour}시 ${end.minute}분이므로 결제할 수 없습니다.")
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    println("현재 시각은 ${isMainatainance.second.hour}시 ${isMainatainance.second.minute}분입니다.")
+                                }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    println("은행 점검 시간은 ${start.hour}시 ${start.minute}분 ~ ${end.hour}시 ${end.minute}분이므로 결제할 수 없습니다.")
+                                }
                             } else if (money >= totalOrderPrice) { // 잔액이 충분하면
                                 orders.clear()
                                 money -= totalOrderPrice
@@ -250,7 +257,11 @@ suspend fun globalDelay(time: Long) {
     delay(time)
 }
 fun isMainatainance(): Pair<Boolean, LocalDateTime> {
-    var now = LocalDateTime.now()
+    var now = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        LocalDateTime.now()
+    } else {
+        TODO("VERSION.SDK_INT < O")
+    }
 
     return Pair(now.toLocalTime() >= start.toLocalTime() && now.toLocalTime() <= end.toLocalTime(), now)
 }

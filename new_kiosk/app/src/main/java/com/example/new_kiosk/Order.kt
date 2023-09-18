@@ -1,10 +1,10 @@
 package com.example.new_kiosk
 
 class Order(food: Food) {
-    var idx: Int
+    var index: Int
     var food: Food
     init {
-        this.idx = getNextIdx()
+        this.index = getNextIdx()
         this.food = food
     }
     companion object {

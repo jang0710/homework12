@@ -1,5 +1,7 @@
 # homework12
 
+new_Kiosk = 버거 키오스크 2023/09/19
+
 new_Calculator = 계산기 과제2023/09/13
 
 List_App = 후발대 과제(전화번호부)

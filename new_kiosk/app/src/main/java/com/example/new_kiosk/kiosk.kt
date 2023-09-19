@@ -14,16 +14,16 @@ var now = LocalDateTime.now() // 현재 시스템의 날짜와 시간을 가져�
 var start = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 10, 0) // 지정된 연, 월, 일, 시, 분, 초를 기반으로한 인스턴스를 생성
 var end = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 45, 0) // 시작시간은 1시 10분, 종료시간은 1시 45분까지
 
-suspend fun main() {
+suspend fun main() { // 비동기 작업을 할 수 있게 suspend를 앞에 붙인다.
     init()
 
     while (true) {
         kioskMenu()
-        var selectNumber = getPureNumber()
-        if (selectNumber == 0) {
+        var selectNumber = getPureNumber() // selectNumber 라는 변수로 가져와서
+        if (selectNumber == 0) { // 0과 같으면
             println("3초뒤에 종료합니다.")
-            globalDelay(3000)
-            exitProcess(0)
+            globalDelay(3000) // 딜레이 3초뒤에
+            exitProcess(0) // 종료
         }
 
         var selectedFood = selectMenu(selectNumber)
@@ -39,7 +39,7 @@ suspend fun main() {
 fun init() {
 
     print("금액을 입력해주세요.")
-    money = readLine()?.toDoubleOrNull() ?: 0.0
+    money = readLine()?.toDoubleOrNull() ?: 0.0 // 값이 null이 되면 0.0을 사용한다.
 
     // 메뉴 추가
     menus.add(Menu("Burgers", "앵거스 비프 통살을 다져만든 버거"))
@@ -76,17 +76,17 @@ fun init() {
     checkOrder()
 
 }
-fun getPureNumber(): Int {
+fun getPureNumber(): Int { // 계산기에서는 일일이 하드코딩 되어있던 a,b,c를 가져와야 했지만 함수로 만들어 넣어줌.
     var userInput: String?
     var number: Int?
 
     while (true) {
         print("번호를 입력해주세요.")
         userInput = readLine()
-        number = userInput?.toIntOrNull()
+        number = userInput?.toIntOrNull() // 숫자라면 number에 넣어주고 아니면 null이 된다.
 
-        if(number != null) {
-            return number
+        if(number != null) { // 정수로 변환 할 수 없으면
+            return number // 반환한다.
         } else {
             println("올바른 숫자를 입력해주세요.")
         }
@@ -94,40 +94,40 @@ fun getPureNumber(): Int {
 }
 
 fun selectMenu(cateNumber: Int): Food? {
-    var menu = menus[cateNumber-1]
+    var menu = menus[cateNumber-1] // menus 리스트에서 cateNumber -1 번째 메뉴를 가져와 변수에 넣는다.
     var categoryName = menu.name
 
-    if (categoryName != "Order" && categoryName != "Cancel") {
-        var filteredFoods = foods.filter { it.category == categoryName }
-        displayShakeMenuDetail(categoryName)
+    if (categoryName != "Order" && categoryName != "Cancel") { // Order와 Cancel 이외에
+        var filteredFoods = foods.filter { it.category == categoryName } // 카테고리가 일치하면 변수에 넣는다.
+        displayShakeMenuDetail(categoryName) // 해당 카테고리 메뉴를 출력하는 함수를 호출
 
         while (true) {
             var selectFoodNumber = getPureNumber()
-            if(selectFoodNumber > filteredFoods.size || selectFoodNumber < 0) {
+            if(selectFoodNumber > filteredFoods.size || selectFoodNumber < 0) { // 0보자 작거나 없는 번호를 입력하면
                 println("올바른 숫자를 입력해주세요.")
-            } else if (selectFoodNumber == 0) {
-                return null
+            } else if (selectFoodNumber == 0) { // 0을 입력하면
+                return null // 반환
             } else {
-                return filteredFoods[selectFoodNumber-1]
+                return filteredFoods[selectFoodNumber-1] // 그게 아니면 선택된 음식을 반환한다.
             }
         }
     } else {
         when(categoryName) {
             "Order" -> {
-                val totalOrderPrice = displayOrderMenuDetail(categoryName)
-                if(totalOrderPrice < 0.0 ) {
+                val totalOrderPrice = displayOrderMenuDetail(categoryName) // 현재까지 주문한 음식들의 총 가격
+                if(totalOrderPrice < 0.0 ) { // 0보다 작을 때는 주문이 없을 때 뿐
                     println("주문 내역이 존재하지 않습니다.")
                     return null
                 }
                 println("1. 주문\t\t 2. 메뉴판")
 
                 while (true) {
-                    var selectOrderNumber = getPureNumber()
+                    var selectOrderNumber = getPureNumber() // getPureNumber() 함수에서 숫자를 입력받아서 selectOrderNumber에 저장한다.
                     when(selectOrderNumber) {
-                        1 -> {
-                            var isMainatainance = isMainatainance()
+                        1 -> { // 주문을 하면
+                            var isMainatainance = isMainatainance() // 함수를 호출해 현재 유지보수 상태를 확인 하고 결과를 isMainatainance에 넣는다.
 
-                            if (isMainatainance.first) {
+                            if (isMainatainance.first) { // true 일때(시작시간과 종료시간의 밖에 있을 때)
                                 println("현재 시각은 ${isMainatainance.second.hour}시 ${isMainatainance.second.minute}분입니다.")
                                 println("은행 점검 시간은 ${start.hour}시 ${start.minute}분 ~ ${end.hour}시 ${end.minute}분이므로 결제할 수 없습니다.")
                             } else if (money >= totalOrderPrice) { // 잔액이 충분하면
@@ -139,7 +139,7 @@ fun selectMenu(cateNumber: Int): Food? {
                             }
                             return null
                         }
-                        2 -> {
+                        2 -> { // 메뉴판으로 돌아가고 싶으면
                             println("메뉴판으로 이동합니다.")
                             return null
                         }
@@ -184,21 +184,20 @@ fun displayShakeMenuDetail(categoryName: String) {
 
     println("\n[ $categoryName MENU ]")
 
-    var filteredFoods = foods.filter { it.category == categoryName }
+    var filteredFoods = foods.filter { it.category == categoryName } // 카테고리가 같은 이름의 음식만 필터링해서 filteredFoods에 넣는다.
 
-    // 메뉴 이름의 여백을 맞춰 준다.
-    // 가장 긴 이름의 길이 얻어옴
-    val maxNameLength = filteredFoods.maxOfOrNull { it.name.length } ?: 0
-    val maxPriceLength = filteredFoods.maxOfOrNull { it.price.toString().length } ?: 0
-    var foodSize = filteredFoods.size
+
+    val maxNameLength = filteredFoods.maxOfOrNull { it.name.length } ?: 0 // 리스트의 가장 긴 음식이름의 길이를 maxNameLength 에 넣는다.
+    val maxPriceLength = filteredFoods.maxOfOrNull { it.price.toString().length } ?: 0 // 리스트의 가장 긴 가격의 길이를 maxPriceLength 에 넣는다.
+    var foodSize = filteredFoods.size // 리스트(food)의 갯수를 저장한다.
     for(i in 1 .. foodSize) {
-        val food = filteredFoods[i-1]
+        val food = filteredFoods[i-1] // 변수에서 해당되는 인덱스의 음식을 food에 넣는다.
         val name = food.name
         val price = food.price
         val desc = food.description
-        val namePadding = " ".repeat( maxNameLength - name.length)
-        val pricePadding = " ".repeat( maxPriceLength - price.toString().length)
-        println("$i. $name$namePadding | W $price$pricePadding | $desc")
+        val namePadding = " ".repeat( maxNameLength - name.length) // 음식이름을 출력할 때 가장 긴 음식의 길이 만큼 공백을 넣어준다.
+        val pricePadding = " ".repeat( maxPriceLength - price.toString().length) // 음식의 가격을 출력할때 가장 긴 가격의 길이만큼 공벽을 넣어준다.
+        println("$i. $name$namePadding | W $price$pricePadding | $desc") // 순번에 맞게 출력
     }
     val backPadding = " ".repeat( maxNameLength - "0. 뒤로가기".length)
     println("0. 뒤로가기$backPadding | 뒤로가기")
@@ -207,18 +206,18 @@ fun displayShakeMenuDetail(categoryName: String) {
 
 fun displayOrderMenuDetail(categoryName: String): Double {
     val orderSize = orders.size
-    if (orderSize > 0) {
+    if (orderSize > 0) { // 주문내역
         println("\n아래와 같이 주문 하시겠습니까?\n")
 
         println("[ Orders ]")
-        for (i in 0 until orderSize) {
+        for (i in 0 until orderSize) { // orderSize는 포함 시키면 안되니 util을 사용
             orders[i].food.displayInfo()
         }
         println("[ Total ]")
-        val totalOrderPrice = orders.fold(0.0) { accumulator, order ->
-            accumulator + order.food.price
+        val totalOrderPrice = orders.fold(0.0) { accumulator, order -> // 모든 주문의 가격을 더해 총 주문 가격을 계산
+            accumulator + order.food.price // 현재까지 누적된 주문에 새로운 주문의 가격을 더해 준다.
         }
-        println("W $totalOrderPrice")
+        println("W $totalOrderPrice") // 총 주문 된 가격
         return totalOrderPrice
     } else {
         return -1.0 // 주문이 들어오면 숫자가 1씩 추가 되는데 주문이 나가면 다시 1씩 깎아주는 역할
@@ -250,10 +249,11 @@ fun addOrder(food: Food) {
 suspend fun globalDelay(time: Long) {
     delay(time)
 }
-fun isMainatainance(): Pair<Boolean, LocalDateTime> {
-    var now = LocalDateTime.now()
+fun isMainatainance(): Pair<Boolean, LocalDateTime> { // 불린과 LocalDateTime 타입의 시간 정보를 반환 한다.
+    var now = LocalDateTime.now() // mow에 넣음
 
-    return Pair(now.toLocalTime() >= start.toLocalTime() && now.toLocalTime() <= end.toLocalTime(), now)
+    return Pair(now.toLocalTime() >= start.toLocalTime() && now.toLocalTime() <= end.toLocalTime(), now) // 현재시간이 시작시간과 종료시간 사이에 있는지 확인한다. 해당하면 참, 해당하지 않으면 거짓을 반환한다.(Boolean)
+    // 끝에 now를 붙이는건 객체의 두번째 요소로 현재 시간을 추가 해주는 것 [결제를 완료했습니다. 2023-09-19T15:00:27.556084600]
 }
 fun checkOrder() {
     var timer = Timer()
@@ -261,5 +261,5 @@ fun checkOrder() {
         override fun run() {
             println("\n 현재 주문 대기수: ${orders.size}")
         }
-    }, 0, 10000)
+    }, 0, 10000) // 딜레이 0, 간격 10초
 }

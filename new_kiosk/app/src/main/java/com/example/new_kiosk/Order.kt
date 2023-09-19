@@ -1,7 +1,7 @@
 package com.example.new_kiosk
 
 class Order(food: Food) {
-    var index: Int
+    var index: Int // name과 같이 식별한다.
     var food: Food
     init {
         this.index = getNextIdx()

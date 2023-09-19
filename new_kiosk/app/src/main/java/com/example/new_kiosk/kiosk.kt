@@ -1,23 +1,19 @@
 package com.example.new_kiosk
 
-import android.annotation.SuppressLint
-import android.os.Build
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 import java.util.Timer
 import java.util.TimerTask
+import kotlin.system.exitProcess
+
 val menus: MutableList<Menu> = ArrayList()
 var money: Double = 0.0
 val foods: MutableList<Food> = ArrayList()
 val orders: MutableList<Order> = ArrayList()
-@SuppressLint("NewApi")
-var now = LocalDateTime.now()
-@SuppressLint("NewApi")
-var start = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 10, 0)
-@SuppressLint("NewApi")
-var end = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 45, 0)
+var now = LocalDateTime.now() // 현재 시스템의 날짜와 시간을 가져온다.
+var start = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 10, 0) // 지정된 연, 월, 일, 시, 분, 초를 기반으로한 인스턴스를 생성
+var end = LocalDateTime.of(now.year, now.month, now.dayOfMonth, 1, 45, 0) // 시작시간은 1시 10분, 종료시간은 1시 45분까지
 
-@SuppressLint("NewApi")
 suspend fun main() {
     init()
 
@@ -27,7 +23,7 @@ suspend fun main() {
         if (selectNumber == 0) {
             println("3초뒤에 종료합니다.")
             globalDelay(3000)
-            return
+            exitProcess(0)
         }
 
         var selectedFood = selectMenu(selectNumber)
@@ -130,16 +126,12 @@ fun selectMenu(cateNumber: Int): Food? {
                             var isMainatainance = isMainatainance()
 
                             if (isMainatainance.first) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    println("현재 시각은 ${isMainatainance.second.hour}시 ${isMainatainance.second.minute}분입니다.")
-                                }
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    println("은행 점검 시간은 ${start.hour}시 ${start.minute}분 ~ ${end.hour}시 ${end.minute}분이므로 결제할 수 없습니다.")
-                                }
+                                println("현재 시각은 ${isMainatainance.second.hour}시 ${isMainatainance.second.minute}분입니다.")
+                                println("은행 점검 시간은 ${start.hour}시 ${start.minute}분 ~ ${end.hour}시 ${end.minute}분이므로 결제할 수 없습니다.")
                             } else if (money >= totalOrderPrice) { // 잔액이 충분하면
                                 orders.clear()
                                 money -= totalOrderPrice
-                                println("결제를 완료했습니다. ${isMainatainance.second.toString()}")
+                                println("결제를 완료했습니다. ${isMainatainance.second}")
                             } else { // 잔액이 부족하면
                                 println("현재 잔액은 ${money}W 으로 ${totalOrderPrice - money}W이 부족해서 주문할 수 없습니다.")
                             }
@@ -194,7 +186,7 @@ fun displayShakeMenuDetail(categoryName: String) {
 
     // 메뉴 이름의 여백을 맞추기 위함
     // 가장 긴 이름의 길이 얻어옴
-    val maxNameLength = filteredFoods.maxOfOrNull { it.name.toString().length } ?: 0
+    val maxNameLength = filteredFoods.maxOfOrNull { it.name.length } ?: 0
     val maxPriceLength = filteredFoods.maxOfOrNull { it.price.toString().length } ?: 0
     var foodSize = filteredFoods.size
     for(i in 1 .. foodSize) {
@@ -206,8 +198,8 @@ fun displayShakeMenuDetail(categoryName: String) {
         val pricePadding = " ".repeat( maxPriceLength - price.toString().length)
         println("$i. $name$namePadding | W $price$pricePadding | $desc")
     }
-    val backPadding = " ".repeat( maxNameLength - "0. back".length)
-    println("0. back$backPadding | 뒤로가기")
+    val backPadding = " ".repeat( maxNameLength - "0. 뒤로가기".length)
+    println("0. 뒤로가기$backPadding | 뒤로가기")
 }
 
 // 디테일한 Order 메뉴판
@@ -257,11 +249,7 @@ suspend fun globalDelay(time: Long) {
     delay(time)
 }
 fun isMainatainance(): Pair<Boolean, LocalDateTime> {
-    var now = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        LocalDateTime.now()
-    } else {
-        TODO("VERSION.SDK_INT < O")
-    }
+    var now = LocalDateTime.now()
 
     return Pair(now.toLocalTime() >= start.toLocalTime() && now.toLocalTime() <= end.toLocalTime(), now)
 }
@@ -271,5 +259,5 @@ fun checkOrder() {
         override fun run() {
             println("\n 현재 주문 대기수: ${orders.size}")
         }
-    }, 0, 5000)
+    }, 0, 50000)
 }

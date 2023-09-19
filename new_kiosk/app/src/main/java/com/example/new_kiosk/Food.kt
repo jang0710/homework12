@@ -10,6 +10,6 @@ open class Food(name: String, description: String, price: Double, category: Stri
     }
 
     override fun displayInfo() {
-        println("ID: $index, 카테고리: $category, 가격: $price, 이름: $name, 설명: [$description]")
+        println("이름: $name, 가격: $price, 설명: [$description]")
     }
 }

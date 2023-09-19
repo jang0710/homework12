@@ -97,7 +97,7 @@ fun selectMenu(cateNumber: Int): Food? {
     var menu = menus[cateNumber-1]
     var categoryName = menu.name
 
-    if (categoryName != "Order" && categoryName != "Cancel") { // SHAKESHACK MENU
+    if (categoryName != "Order" && categoryName != "Cancel") {
         var filteredFoods = foods.filter { it.category == categoryName }
         displayShakeMenuDetail(categoryName)
 
@@ -111,7 +111,7 @@ fun selectMenu(cateNumber: Int): Food? {
                 return filteredFoods[selectFoodNumber-1]
             }
         }
-    } else { // ORDER MENU
+    } else {
         when(categoryName) {
             "Order" -> {
                 val totalOrderPrice = displayOrderMenuDetail(categoryName)
@@ -179,14 +179,14 @@ fun kioskMenu() {
     println("0. 종료 | 프로그램 종료")
 }
 
-// 디테일한 Shake 메뉴판
+
 fun displayShakeMenuDetail(categoryName: String) {
 
     println("\n[ $categoryName MENU ]")
 
     var filteredFoods = foods.filter { it.category == categoryName }
 
-    // 메뉴 이름의 여백을 맞추기 위함
+    // 메뉴 이름의 여백을 맞춰 준다.
     // 가장 긴 이름의 길이 얻어옴
     val maxNameLength = filteredFoods.maxOfOrNull { it.name.length } ?: 0
     val maxPriceLength = filteredFoods.maxOfOrNull { it.price.toString().length } ?: 0
@@ -204,7 +204,7 @@ fun displayShakeMenuDetail(categoryName: String) {
     println("0. 뒤로가기$backPadding | 뒤로가기")
 }
 
-// 디테일한 Order 메뉴판
+
 fun displayOrderMenuDetail(categoryName: String): Double {
     val orderSize = orders.size
     if (orderSize > 0) {

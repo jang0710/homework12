@@ -22,12 +22,12 @@ suspend fun main() { // 비동기 작업을 할 수 있게 suspend를 앞에 붙
         var selectNumber = getPureNumber() // selectNumber 라는 변수로 가져와서
         if (selectNumber == 0) { // 0과 같으면
             println("3초뒤에 종료합니다.")
-            globalDelay(3000) // 딜레이 3초뒤에
+            globalDelay(3000) // 딜레이 3초뒤에 (비동기)
             exitProcess(0) // 종료
         }
 
         var selectedFood = selectMenu(selectNumber)
-        globalDelay(2000)
+        globalDelay(2000) // (비동기)
         selectedFood?.let { food ->
             // selectedFood가 null이 아닐 때 수행할 코드 블록 (음식 로직)
             addOrder(food)

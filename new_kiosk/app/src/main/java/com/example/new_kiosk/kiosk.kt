@@ -27,7 +27,7 @@ suspend fun main() {
         }
 
         var selectedFood = selectMenu(selectNumber)
-        globalDelay(3000)
+        globalDelay(2000)
         selectedFood?.let { food ->
             // selectedFood가 null이 아닐 때 수행할 코드 블록 (음식 로직)
             addOrder(food)
@@ -37,7 +37,9 @@ suspend fun main() {
     }
 }
 fun init() {
-    money = 100.0
+
+    print("금액을 입력해주세요.")
+    money = readLine()?.toDoubleOrNull() ?: 0.0
 
     // 메뉴 추가
     menus.add(Menu("Burgers", "앵거스 비프 통살을 다져만든 버거"))
@@ -219,7 +221,7 @@ fun displayOrderMenuDetail(categoryName: String): Double {
         println("W $totalOrderPrice")
         return totalOrderPrice
     } else {
-        return -1.0
+        return -1.0 // 주문이 들어오면 숫자가 1씩 추가 되는데 주문이 나가면 다시 1씩 깎아주는 역할
     }
 }
 fun addOrder(food: Food) {
@@ -259,5 +261,5 @@ fun checkOrder() {
         override fun run() {
             println("\n 현재 주문 대기수: ${orders.size}")
         }
-    }, 0, 50000)
+    }, 0, 10000)
 }

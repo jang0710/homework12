@@ -1,16 +1,23 @@
 <resources>
     <string name="app_name">homework1</string>
-    <string name="signin_name">아이디를 입력하세요.</string>
-    <string name="signin_pw">비밀번호를 입력하세요.</string>
-    <string name="toast_msg_idpgErr">아이디/비밀번호를 입력해주세요..</string>
-    <string name="toast_msg_idErr">아이디를 입력해주세요..</string>
-    <string name="toast_msg_pwErr">비밀번호를 입력해주세요..</string>
-    <string name="toast_msg_nameErr">이름을 입력해주세요..</string>
-    <string name="toast_msg_mbtiErr">mbti를 입력해주세요..</string>
-    <string name="toast_msg_ageErr">나이를 입력해주세요..</string>
-    <string name="toast_msg_Err">정보를 입력해주세요..</string>
+    <string name="idpwErr">아이디/비밀번호를 입력해주세요..</string>
+    <string name="idErr">아이디를 입력해주세요.</string>
+    <string name="pwErr">비밀번호를 입력해주세요.</string>
+    <string name="nameErr">이름을 입력해주세요.</string>
+    <string name="mbtiErr">mbti를 입력해주세요.</string>
+    <string name="ageErr">나이를 입력해주세요.</string>
+    <string name="Err">정보를 입력해주세요.</string>
     <string name="signup_id">아이디를 입력하세요.</string>
     <string name="signup_pw">비밀번호를 입력하세요.</string>
     <string name="signup_name">이름을 입력하세요.</string>
     <string name="signup_mbti">MBTI를 입력하세요.</string>
+    <string name="tv_pass">비밀번호</string>
+    <string name="tv_id">아이디</string>
+    <string name="btn_login">로그인</string>
+    <string name="btn_signup">회원가입</string>
+    <string name="btn_close">종료</string>
+    <string name="mbti_infp">MBTI: </string>
+    <string name="tv_age">나이: </string>
+    <string name="tv_name">이름: </string>
+    <string name="tv_idtext">아이디:</string>
 </resources>

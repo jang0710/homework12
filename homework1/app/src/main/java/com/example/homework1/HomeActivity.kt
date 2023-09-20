@@ -16,6 +16,7 @@ class HomeActivity : AppCompatActivity() {
         val tv_name = findViewById<TextView>(R.id.tv_name)
         val tv_age = findViewById<TextView>(R.id.tv_age)
         val tv_mbti = findViewById<TextView>(R.id.tv_mbti)
+
         // 연결하다가 만 부분
 
         if (intent.hasExtra("id")) {

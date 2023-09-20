@@ -34,7 +34,6 @@ class SignInActivity : AppCompatActivity() {
                 age2 = data?.getStringExtra("age") ?: ""
                 id.setText(id2)
                 pw.setText(pw2)
-
             }
         }
         btn_log.setOnClickListener {

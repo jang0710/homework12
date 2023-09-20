@@ -1,5 +1,7 @@
 # homework12
 
+new_About_me = 자기소개 앱 2023/09/20
+
 new_Kiosk = 버거 키오스크 2023/09/19
 
 new_Calculator = 계산기 과제2023/09/13

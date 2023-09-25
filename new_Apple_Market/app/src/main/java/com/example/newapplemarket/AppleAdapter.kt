@@ -13,6 +13,10 @@ class AppleAdapter( val appleItems: MutableList<MyItem> ) : RecyclerView.Adapter
         fun onClick(view: View, position: Int)
     }
     var itemClick: ItemClick? = null
+    interface ItemLongClick {
+        fun onLongClick(view: View, position: Int)
+    }
+    var itemLongClick: ItemLongClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppleItems {
         val binding = AppleItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -22,6 +26,10 @@ class AppleAdapter( val appleItems: MutableList<MyItem> ) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: AppleItems, position: Int) {
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it,position)
+        }
+        holder.itemView.setOnLongClickListener() OnLongClickListener@ {
+            itemLongClick?.onLongClick(it, position)
+            return@OnLongClickListener true
         }
         holder.image.setImageResource(appleItems[position].aImage)
         holder.name.text = appleItems[position].aName

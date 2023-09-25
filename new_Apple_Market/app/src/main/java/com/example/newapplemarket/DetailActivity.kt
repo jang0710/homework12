@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.newapplemarket.databinding.ActivityDetailBinding
+import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
 
 class DetailActivity : AppCompatActivity() {
@@ -39,6 +40,16 @@ class DetailActivity : AppCompatActivity() {
         binding.ivHeart.setImageResource(if (isLike) {R.drawable.redheart1}else{R.drawable.heart_image2})
         binding.btnBack.setOnClickListener {
             exit()
+        }
+        binding.ivHeart.setOnClickListener {
+            if (!isLike) {
+                binding.ivHeart.setImageResource(R.drawable.redheart1)
+                Snackbar.make(binding.constLayout, "관심 목록에 추가되었습니다.", Snackbar.LENGTH_SHORT).show()
+                isLike = true
+            }else {
+                binding.ivHeart.setImageResource(R.drawable.heart_image2)
+                isLike = false
+            }
         }
     }
     fun exit() {

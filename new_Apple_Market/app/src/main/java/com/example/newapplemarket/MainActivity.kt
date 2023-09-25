@@ -1,12 +1,21 @@
 package com.example.newapplemarket
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AlphaAnimation
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newapplemarket.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +52,22 @@ class MainActivity : AppCompatActivity() {
                 activityResultLauncher.launch(intent)
             }
         }
+        adapter.itemLongClick = object : AppleAdapter.ItemLongClick {
+            override fun onLongClick(view: View, position: Int) {
+                val ad = AlertDialog.Builder(this@MainActivity)
+                ad.setIcon(R.drawable.bubble)
+                ad.setTitle("상품 삭제")
+                ad.setMessage("정말로 삭제하시겠습니까?")
+                ad.setPositiveButton("확인") { dialog, _ ->
+                    dataList.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                }
+                ad.setNegativeButton("취소"){ dialog, _ ->
+                    dialog.dismiss()
+                }
+                ad.show()
+            }
+        }
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 val itemIdx = it.data?.getIntExtra("itemIndex", 0) as Int
@@ -60,5 +85,91 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyItemChanged(itemIdx)
             }
         }
+        binding.btnNotification.setOnClickListener {
+            notification()
+        }
+        val show = AlphaAnimation(0f, 1f).apply { duration = 500 } // 0.5초
+        val hide = AlphaAnimation(1f, 0f).apply { duration = 500 } // 0.5초
+        var isTop = true
+
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding.floatingButton.startAnimation(hide)
+                    binding.floatingButton.visibility = View.GONE
+                    isTop = true
+                } else {
+                    if (isTop) {
+                        binding.floatingButton.visibility = View.VISIBLE
+                        binding.floatingButton.startAnimation(show)
+                        isTop = false
+                    }
+                }
+            }
+        })
+
+        binding.floatingButton.setOnClickListener {
+            binding.recyclerView.smoothScrollToPosition(0)
+        }
+    }
+    override fun onBackPressed() {   // 뒤로가기 누르면 다이얼로그 생성
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("종료") // 다이얼로그 제목
+        builder.setMessage("정말로 종료하시겠습니까?") // 다이얼로그 내용
+        builder.setIcon(R.drawable.bubble) // 타이틀 옆 이미지
+        builder.setCancelable(false) // 다이얼로그 화면 밖 터치 방지
+        builder.setPositiveButton("확인") { _, _ ->
+            finish() // 앱 종료 처리
+        }
+        builder.setNegativeButton("취소") { dialog, _ ->
+            dialog.dismiss() // 다이얼로그 닫기
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+    fun notification() {
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val builder: NotificationCompat.Builder
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "one-channel"
+            val channelName = "My Channel One"
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                // 채널의 정보, 기능을 추가하는 곳
+                description = "My Channel One Description"
+                setShowBadge(true)
+            }
+            manager.createNotificationChannel(channel) //채널 넣기
+            builder = NotificationCompat.Builder(this, channelId) // 아이디 넣기
+        } else {
+            // 26버전 이하
+            builder = NotificationCompat.Builder(this)
+        }
+        val largeBitmap = BitmapFactory.decodeResource(resources, R.drawable.sample10) // 알림에 출력할 사진
+        val intent = Intent(this, MainActivity::class.java) // 알림을 누르면 앱으로 들어가게 해준다.
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        // 알림의 기본정보
+        builder.run {
+            setSmallIcon(R.drawable.account) // 알림에 출력되는 아이콘
+            setWhen(System.currentTimeMillis()) // 알림의 발생 시간 에뮬레이터의 시간으로 설정
+            setContentTitle("애플 마켓")
+            setContentText("오늘의 추천 물품!")
+            setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("22년 신세계 대전 구매입니당.\n셀린느 버킷백\n구매해서 몇번사용했어요.\n까짐 스크래치 없습니다.\n타지역에서 보내는거라 택배로 진행합니당!"))
+            setLargeIcon(largeBitmap) // 사진이 출력되는 공간
+            addAction(R.mipmap.ic_launcher, "확인", pendingIntent)
+        }
+        manager.notify(11,builder.build())
     }
 }
